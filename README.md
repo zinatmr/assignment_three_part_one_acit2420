@@ -2,11 +2,16 @@
 
 Download both generate_index and serversetup.sh.
 
-1. Change the permission of serversetup.sh script.
+1. Change the permission of serversetup.sh and generate_index script.
+    ```bash
     chmod +x serversetup.sh
+    chmod +x generate_index
+    ```
 
 2. Run the serversetup.sh script with root privelage or sudo
+    ```bash
     sudo ./serversetup.sh
+    ```
 
 Digital Ocean IP Address: http://64.23.190.247/
 
