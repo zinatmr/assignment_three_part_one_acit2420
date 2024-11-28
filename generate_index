@@ -9,6 +9,7 @@ set -euo pipefail
 KERNEL_RELEASE=$(uname -r)
 OS_NAME=$(grep '^PRETTY_NAME' /etc/os-release | cut -d '=' -f2 | tr -d '"')
 DATE=$(date +"%d/%m/%Y")
+TIME=$(date +"%H:%M:%S")
 PACKAGE_COUNT=$(pacman -Q | wc -l)
 OUTPUT_DIR="/var/lib/webgen/HTML"
 OUTPUT_FILE="$OUTPUT_DIR/index.html"
@@ -33,6 +34,7 @@ cat <<EOF > "$OUTPUT_FILE"
     <p><strong>Kernel Release:</strong> $KERNEL_RELEASE</p>
     <p><strong>Operating System:</strong> $OS_NAME</p>
     <p><strong>Date:</strong> $DATE</p>
+    <p><strong>Time:</strong> $TIME</p>
     <p><strong>Number of Installed Packages:</strong> $PACKAGE_COUNT</p>
 </body>
 </html>

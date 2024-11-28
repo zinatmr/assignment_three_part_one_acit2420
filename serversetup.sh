@@ -94,42 +94,46 @@ systemctl enable --now generate-index.timer
 ## Installing and setting up nginx
 # Define variables
 NGINX_CONF_PATH="/etc/nginx/nginx.conf"
+SERVER_BLOCK="/etc/nginx/sites-available/webgen_server_block.conf"
+WEB_ROOT="/var/lib/webgen/HTML"
+SERVER_IP="64.23.190.247"
+SITES_AVAILABLE="/etc/nginx/sites-available"
+SITES_ENABLED="/etc/nginx/sites-enabled"
 
 # Installing NGINX
 echo "Installing NGINX..."
 pacman -Syu --noconfirm nginx
 echo "NGINX is installed successfully."
 
-# Configuring NGINX
-echo "Configuring NGINX..."
-cat >"$NGINX_CONF_PATH" <<EOF
-user webgen;
-worker_processes  1;
+# Updating user in nginx.conf
+echo "Updating nginx.conf to use the 'webgen' user..."
+sed -i 's/^user .*/user webgen;/' "$NGINX_CONF_PATH"
 
-events {
-    worker_connections  1024;
-}
+# create the following directories for server block
+echo "Creating sites-available and sites-enabled directory"
+mkdir -p "$SITES_AVAILABLE" "$SITES_ENABLED"
 
-http {
-    include       mime.types;
-    default_type  application/octet-stream;
+# Creating separate server block
+cat > "$SERVER_BLOCK" <<EOF
+server {
+    listen 80;
+    server_name $SERVER_IP;
 
-    sendfile        on;
-    keepalive_timeout  65;
+    root $WEB_ROOT;
+    index index.html;
 
-    server {
-        listen 80;
-        server_name 64.23.190.247;
-
-        root /var/lib/webgen/HTML;
-        index index.html;
-
-        location / {
-                try_files \$uri \$uri/ =404;
-        }
+    location / {
+        try_files \$uri \$uri/ =404;
     }
 }
 EOF
+
+# Includeing the server block to nginx.conf
+sed -i '/http {/a \    include sites-enabled/*;' "$NGINX_CONF_PATH"
+
+
+# Enabling the site
+ln -s $SITES_AVAILABLE/webgen_server_block.conf $SITES_ENABLED/webgen_server_block.conf
 
 # Starting NGINX
 echo "Starting NGINX service..."

@@ -16,5 +16,46 @@ Download both generate_index and serversetup.sh.
 Digital Ocean IP Address: http://64.23.190.247/
 
 
-NOTE: The command 'ufw' to setup firewall does not work due to issues with iftable in Linux kernel I have in the Digital ocean droplet. Comment out the commands under Task-5 in serversetup.sh to ignore the Firewall setup.
+NOTE: The command 'ufw' to setup firewall does not work due to issues with iptable in Linux kernel I have in the Digital ocean droplet. Comment out the commands under Task-5 in serversetup.sh to ignore the Firewall setup.
 
+##Answers to Assingment three questions
+
+Q1: What is the benefit of creating a system user for this task rather than using a regular user or root?
+
+Ans: Creating a system user limits permission for security purposes. It cannot be accessed interactively. Also ensures task runs with minimal privileges,reducing risks.
+
+
+Q2:  How will you verify that the timer is active and that the service runs successfully?" "What commands can you run to check logs and to confirm the service's execution?
+
+Ans: To verify that the time is active I will use the following command:
+
+```bash
+systemctl list-timers | grep generate-index
+```
+
+To check service execution log I will use the following command:
+```bash
+journalctl -u generate-index.service
+```
+
+Q3: Why is it important to use a separate server block file instead of modifying the main nginx.conf file directly?
+
+Ans: It keeps the nginx.conf clean and is easier to create manage multiple server blocks.
+
+Q4: How can you check the status of the nginx services and test your nginx configuration?
+
+Ans: I can check the nginx services status using following command:
+```bash
+sudo systemctl status nginx
+```
+I can test nginx configuration using the following command:
+```bash
+sudo nginx -t
+```
+
+Q5:  How can you check the status of your firewall?
+
+Ans: I can check the status of the firewall using the following command:
+```bash
+sudo ufw status
+```
