@@ -13,7 +13,7 @@ Download both generate_index and serversetup.sh.
     sudo ./serversetup.sh
     ```
 
-Digital Ocean IP Address: http://64.23.190.247/
+
 
 
 NOTE: The command 'ufw' to setup firewall does not work due to issues with iptable in Linux kernel I have in the Digital ocean droplet. Comment out the commands under Task-5 in serversetup.sh to ignore the Firewall setup. Added TIME in the generate_index script. The html page will show time when the index page was generated. The time in the "assignment_3_part_one.png" is 2:40. It shows the time when I was testing it. But original timer is set for 05:00 everyday.
