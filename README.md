@@ -8,7 +8,7 @@ Download both generate_index and serversetup.sh.
     chmod +x generate_index
     ```
 
-2. Run the serversetup.sh script with root privelage or sudo
+2. Run the serversetup.sh script with root privilege or sudo
     ```bash
     sudo ./serversetup.sh
     ```
